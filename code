@@ -1,0 +1,110 @@
+import os
+import speech_recognition as sr
+import pyttsx3
+import random
+
+# -------------------------------
+# Initialize
+# -------------------------------
+engine = pyttsx3.init()
+
+def speak(text):
+    print("Assistant:", text)
+    engine.say(text)
+    engine.runAndWait()
+
+def listen():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("\nListening...")
+        audio = r.listen(source)
+
+    try:
+        command = r.recognize_google(audio).lower()
+        print("You said:", command)
+        return command
+    except sr.UnknownValueError:
+        speak("Sorry, I didn't catch that.")
+        return ""
+    except sr.RequestError:
+        speak("Sorry, there’s a problem with the speech service.")
+        return ""
+
+# -------------------------------
+# Multi-user setup
+# -------------------------------
+users = {
+    "piyush": {"voice": 0, "greeting": "Welcome back, Piyush. Ready to command?"},
+    "alex": {"voice": 1, "greeting": "Hey Alex, what are we doing today?"},
+    "sam": {"voice": 0, "greeting": "Good to see you, Sam. Let's get started."}
+}
+
+def set_user_voice(voice_index):
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[voice_index].id)
+
+# -------------------------------
+# User login phase
+# -------------------------------
+speak("Hello! Who’s using the system today?")
+current_user = listen()
+
+if current_user in users:
+    set_user_voice(users[current_user]["voice"])
+    speak(users[current_user]["greeting"])
+else:
+    speak("I don’t recognize this user. Default settings will be applied.")
+    current_user = "guest"
+
+# -------------------------------
+# Music Playlist
+# -------------------------------
+music_videos = [
+    "https://youtu.be/HexFqifusOk?si=soo5uf_oWTq_J9n1",
+    "https://youtu.be/pKwNDsBxXRA?si=XX2QI7ESC--zMd6_",
+    "https://youtu.be/-4JV4hur1PM?si=6XTe7KR9CDNhtbgt"
+]
+
+speak("Voice assistant is ready. Please say a command!")
+
+# -------------------------------
+# Main loop
+# -------------------------------
+while True:
+    command = listen()
+    if not command:
+        continue
+
+    if "shutdown" in command:
+        speak(f"{current_user}, shutting down your computer.")
+        os.system("shutdown /s /t 5")
+        break
+
+    elif "restart" in command:
+        speak(f"{current_user}, restarting the system.")
+        os.system("shutdown /r /t 5")
+        break
+
+    elif "lock" in command:
+        speak("Locking the computer.")
+        os.system("rundll32.exe user32.dll,LockWorkStation")
+
+    elif "exit" in command or "quit" in command:
+        speak(f"Goodbye, {current_user}.")
+        break
+
+    elif "open chrome" in command:
+        speak("Opening Chrome.")
+        os.system("start chrome")
+
+    elif "open youtube" in command:
+        speak("Opening YouTube.")
+        os.system("start chrome https://www.youtube.com")
+
+    elif "play music" in command:
+        video = random.choice(music_videos)
+        speak("Playing a random music video.")
+        os.system(f"start chrome {video}")
+
+    else:
+        speak("Sorry, I don’t understand that command.")
