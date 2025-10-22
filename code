@@ -37,6 +37,7 @@ users = {
     "piyush": {"voice": 0, "greeting": "Welcome back, Piyush. Ready to command?"},
     "alex": {"voice": 1, "greeting": "Hey Alex, what are we doing today?"},
     "sam": {"voice": 0, "greeting": "Good to see you, Sam. Let's get started."}
+    # You can add your name
 }
 
 def set_user_voice(voice_index):
