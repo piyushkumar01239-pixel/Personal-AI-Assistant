@@ -64,6 +64,7 @@ music_videos = [
     "https://youtu.be/HexFqifusOk?si=soo5uf_oWTq_J9n1",
     "https://youtu.be/pKwNDsBxXRA?si=XX2QI7ESC--zMd6_",
     "https://youtu.be/-4JV4hur1PM?si=6XTe7KR9CDNhtbgt"
+    #You can add or choose random libraries and link to your playlist
 ]
 
 speak("Voice assistant is ready. Please say a command!")
