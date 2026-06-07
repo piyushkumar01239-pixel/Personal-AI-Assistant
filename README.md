@@ -26,5 +26,5 @@ A voice-controlled AI built in Python that can **listen, speak, and perform syst
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/Personal-AI-Assistant.git
+   git clone https://github.com/piyushkumar01239-pixel/Personal-AI-Assistant.git
    cd Personal-AI-Assistant
